@@ -4,12 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 
+import org.bouncycastle.asn1.ASN1Enumerated;
 import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.ASN1OctetString;
 import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
-import org.bouncycastle.asn1.DEREnumerated;
-import org.bouncycastle.asn1.DERObjectIdentifier;
 import org.jaaslounge.decoding.DecodingException;
 import org.jaaslounge.decoding.DecodingUtil;
 
@@ -37,11 +37,11 @@ public class SpnegoTargToken extends SpnegoToken {
             tagged = DecodingUtil.as(ASN1TaggedObject.class, fields);
             switch (tagged.getTagNo()) {
             case 0:
-                DEREnumerated enumerated = DEREnumerated.getInstance(tagged, true);
+                ASN1Enumerated enumerated = ASN1Enumerated.getInstance(tagged, true);
                 result = enumerated.getValue().intValue();
                 break;
             case 1:
-                DERObjectIdentifier mechanismOid = DERObjectIdentifier.getInstance(tagged, true);
+                ASN1ObjectIdentifier mechanismOid = ASN1ObjectIdentifier.getInstance(tagged, true);
                 mechanism = mechanismOid.getId();
                 break;
             case 2:
